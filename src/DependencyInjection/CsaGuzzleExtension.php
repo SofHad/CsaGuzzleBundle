@@ -40,6 +40,7 @@ class CsaGuzzleExtension extends Extension
         $loader->load('twig.xml');
         $loader->load('factory.xml');
         $loader->load('services.xml');
+        $loader->load('serializer.xml');
 
         $descriptionFactory = $container->getDefinition('csa_guzzle.description_factory');
 
@@ -98,6 +99,17 @@ class CsaGuzzleExtension extends Extension
     private function processClientsConfiguration(array $config, ContainerBuilder $container, Definition $descriptionFactory)
     {
         foreach ($config['clients'] as $name => $options) {
+            if ($config['serializer']['enabled'] || $options['serializer']['enabled']) {
+                $serializerAdapter = $config['serializer']['adapter'];
+                if ($options['serializer']['enabled']) {
+                    $serializerAdapter = $options['serializer']['adapter'];
+                }
+                $options['config']['serializer_adapter'] = new Reference($serializerAdapter);
+                if ('GuzzleHttp\Client' === $options['class']) {
+                    $options['class'] = 'Csa\Bundle\GuzzleBundle\GuzzleHttp\ClientSerializerAdapter';
+                }
+            }
+
             $client = new Definition($options['class']);
 
             if (isset($options['config'])) {

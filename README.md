@@ -73,6 +73,7 @@ Documentation
 * [Configuration reference](src/Resources/doc/configuration_reference.md)
 * [Streaming a guzzle response](src/Resources/doc/response_streaming.md)
 * [Service descriptions](src/Resources/doc/service_descriptions.md)
+* [Using specific serializer](src/Resources/doc/specific_serializer.md)
 
 License
 -------

@@ -72,6 +72,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->append($this->createClientsNode())
                 ->scalarNode('factory_class')->defaultValue('GuzzleHttp\Client')->end()
+                ->append($this->createSerializerNode())
                 ->append($this->createCacheNode())
             ->end()
         ;
@@ -108,6 +109,7 @@ class Configuration implements ConfigurationInterface
                             ->thenInvalid('Class %s is missing. Did you forget to add guzzlehttp/services to your project\'s composer.json?')
                         ->end()
                     ->end()
+                    ->append($this->createSerializerNode())
                 ->end()
             ->end()
         ;
@@ -178,6 +180,27 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('service')->defaultNull()->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function createSerializerNode()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('serializer');
+
+        $node
+            ->canBeEnabled()
+            ->validate()
+                ->ifTrue(function ($v) {
+                    return $v['enabled'] && null === $v['adapter'];
+                })
+                ->thenInvalid('The \'csa_guzzle.serializer.adapter\' key is mandatory if you enable the serializer')
+            ->end()
+            ->children()
+                ->scalarNode('adapter')->defaultNull()->end()
             ->end()
         ;
 

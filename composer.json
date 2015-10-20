@@ -16,14 +16,18 @@
     },
     "suggest": {
         "doctrine/cache": "Allows caching of responses",
-        "guzzlehttp/guzzle-services": "Allow web service description"
+        "guzzlehttp/guzzle-services": "Allow web service description",
+        "symfony/serializer": "Allow better serialization/deserialization of objects",
+        "jms/serializer-bundle": "Allow better serialization/deserialization of objects (alternative)"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
-        "doctrine/cache": "~1.1",
-        "symfony/web-profiler-bundle": "~2.3",
+        "phpunit/phpunit": "^4.0",
+        "doctrine/cache": "^1.1",
+        "symfony/web-profiler-bundle": "^2.3",
         "guzzlehttp/guzzle-services": "~0.3",
-        "symfony/phpunit-bridge": "~2.7|~3.0"
+        "symfony/phpunit-bridge": "~2.7|~3.0",
+        "symfony/serializer": "^2.7|^3.0",
+        "jms/serializer-bundle": "^1.0"
     },
     "autoload": {
         "psr-4": { "Csa\\Bundle\\GuzzleBundle\\": "src" }
